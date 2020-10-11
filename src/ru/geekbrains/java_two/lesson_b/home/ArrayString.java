@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class ArrayString {
     private float halfSumEl;
     private String[][] arrayFromString;
+    private int[][] arrayInt;
     private int countStringArr;
     private int countColumnArr;
     public static int MAX_STRING = 4;
@@ -43,7 +44,7 @@ public class ArrayString {
         this.countStringArr = countN+1;
     }
 
-    private void countColumn (int indexI){    //подсчет маскимального количества столбцов по сомой длинной подстроке
+    private void countColumn (int indexI){    //подсчет маскимального количества столбцов по самой длинной подстроке
         if (this.countColumnArr < this.arrayFromString[indexI].length){
             this.countColumnArr = this.arrayFromString[indexI].length;
         }
@@ -79,22 +80,33 @@ public class ArrayString {
         return true;
     }
 
-    private void halfSumArray () throws NotNumberException{            //подсчет полусуммы элементов
-        float sum = 0;
-        for (int i = 0; i < this.arrayFromString.length; i++) {
-            for (int j = 0; j < this.arrayFromString[i].length; j++) {
-                if (isNumeric(this.arrayFromString[i][j])){
-                    sum += Integer.parseInt(this.arrayFromString[i][j]);
+    private int[][] allStringElementsToInt(String[][] arrStr) throws NotNumberException{       //преобразование элементов в Int
+        int[][] arrInt = new int[this.countStringArr][this.countColumnArr];
+        for (int i = 0; i < arrStr.length; i++) {
+            for (int j = 0; j < arrStr[i].length; j++) {
+                if (isNumeric(arrStr[i][j])){
+                    arrInt[i][j] = Integer.parseInt(arrStr[i][j]);
                 } else {
                     throw new NotNumberException("Element \'" + this.arrayFromString[i][j] + "\' not Integer Number");
                 }
+            }
+        }
+        return arrInt;
+    }
+
+    private void halfSumArray (int[][] arrInt){            //подсчет полусуммы элементов
+        float sum = 0;
+        for (int i = 0; i < arrInt.length; i++) {
+            for (int j = 0; j < arrInt[i].length; j++) {
+                sum += arrInt[i][j];
             }
         }
         this.halfSumEl = sum/2;
     }
 
     public ArrayString(String s){
-        strToArrayStr(s);       //преобразуем строку в двумерный стрковый массив
-        halfSumArray();         //преобразуем элементы в int И считаем половину суммы элементов массива
+       strToArrayStr(s);       //преобразуем строку в двумерный стрковый массив
+       this.arrayInt = allStringElementsToInt(this.arrayFromString);         //преобразуем элементы в int
+       halfSumArray(this.arrayInt);   // считаем половину суммы элементов массива
     }
 }
