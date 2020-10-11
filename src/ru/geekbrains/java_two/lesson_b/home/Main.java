@@ -9,11 +9,11 @@ public class Main {
             System.out.println("Our array: \n" + arr.printArrayString());
             System.out.println("HalfSum of Int Elements of Array = " + arr.getHalfSumEl());
         } catch (SizeStringArrayException e) {
-            System.out.print("ERROR: ");
+            System.out.print("EXCEPTION: ");
             System.out.print(e.getMessage() + e.getCountString() + "x" + e.getCountColumn() + ", ");
             System.out.println("Need " + ArrayString.MAX_STRING + "x" + ArrayString.MAX_COLUMN);
         } catch (NotNumberException e2){
-            System.out.print("ERROR: ");
+            System.out.print("EXCEPTION: ");
             System.out.println(e2.getMessage());
         }
 
